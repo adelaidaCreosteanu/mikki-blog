@@ -1,62 +1,33 @@
 import React, { useEffect, useState } from "react";
-import Post from "./Post";
+import PublishedPost from "./PublishedPost";
 import { Stack } from "@mui/material";
 import CreatePost from "./CreatePost";
+import { useGetPostsForUser } from "../use-queries";
 
 type ProfileProps = {
-  userid: number;
+  userId: number;
 };
 
-const dummyPosts = [
-  {
-    id: 1,
-    title: "My title 1",
-    content: "Some text content 1",
-    created: "2024-04-01T16:19:01.000Z",
-    modified: "2024-04-01T16:19:01.000Z",
-    userId: 2,
-    author: {
-      id: 2,
-      firstName: "First",
-      lastName: "Last",
-      username: "testusername",
-      created: "2024-04-01T15:57:46.000Z",
-    },
-  },
-  {
-    id: 2,
-    title: "My title 2",
-    content:
-      "Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2 Some text content 2",
-    created: "2024-04-01T16:19:11.000Z",
-    modified: "2024-04-01T16:19:11.000Z",
-    userId: 2,
-    author: {
-      id: 2,
-      firstName: "First",
-      lastName: "Last",
-      username: "testusername",
-      created: "2024-04-01T15:57:46.000Z",
-    },
-  },
-];
-const Profile = ({ userid }: ProfileProps) => {
+const Profile = ({ userId }: ProfileProps) => {
   const [isOwnProfile, setIsOwnProfile] = useState(false);
+  const userToken = "token-valid-for-17";
+  const posts = useGetPostsForUser(userId, userToken);
+  // TODO: fetch username
+  const username = `User ${userId}`;
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");
-    const val = currentUser === userid.toString();
+    const val = currentUser === userId.toString();
     setIsOwnProfile(val);
-  }, [userid, isOwnProfile, setIsOwnProfile]);
+  }, [userId, isOwnProfile, setIsOwnProfile]);
 
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
       <div>
-        {/* TODO: fetch username */}
-        <p>User {userid} profile</p>
+        <p>{username} profile</p>
       </div>
 
-      {isOwnProfile ? <CreatePost></CreatePost> : null}
+      {isOwnProfile ? <CreatePost /> : null}
 
       <Stack
         spacing={2}
@@ -64,12 +35,19 @@ const Profile = ({ userid }: ProfileProps) => {
         alignItems="center"
         style={{ width: "65ch" }}
       >
-        {/* TODO: fetch posts */}
-        {dummyPosts.length === 0 ? (
-          <p>You don't have any posts yet. Create one!</p>
+        {posts.length === 0 ? (
+          isOwnProfile ? (
+            <p>You don't have any posts yet. Create one!</p>
+          ) : (
+            <p>{username} doesn't have any posts yet, sorry! </p>
+          )
         ) : (
-          dummyPosts.map((post) => (
-            <Post key={post.id} title={post.title} content={post.content} />
+          posts.map((post) => (
+            <PublishedPost
+              key={post.id}
+              title={post.title}
+              content={post.content}
+            />
           ))
         )}
       </Stack>

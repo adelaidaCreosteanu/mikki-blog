@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <img src="logo.jpeg" alt="logo" style={{ width: 125, marginTop: 20 }} />
 
-      <Profile userid={17}></Profile>
+      <Profile userId={17}></Profile>
     </div>
   );
 }
