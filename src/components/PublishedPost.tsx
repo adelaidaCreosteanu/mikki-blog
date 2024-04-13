@@ -11,7 +11,7 @@ type PostProps = {
   content: string;
 };
 
-const Post = ({ title, content }: PostProps) => {
+const PublishedPost = ({ title, content }: PostProps) => {
   return (
     <Card style={{ width: "100%" }}>
       <CardContent>
@@ -30,4 +30,4 @@ const Post = ({ title, content }: PostProps) => {
   );
 };
 
-export default Post;
+export default PublishedPost;
