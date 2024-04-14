@@ -5,7 +5,7 @@ export const sendNewPost = async (
   title: string,
   content: string,
   token: string
-): Promise<AxiosResponse | undefined> => {
+): Promise<AxiosResponse | null> => {
   try {
     return await axios.post(
       `${BACKEND}/posts`,
@@ -16,6 +16,7 @@ export const sendNewPost = async (
     );
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 

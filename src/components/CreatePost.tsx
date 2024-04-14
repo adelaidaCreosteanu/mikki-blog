@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { sendNewPost } from "../service/post-queries";
-import { red } from "@mui/material/colors";
 
 type CreatePostProps = {
   setTriggerReload: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,7 +31,7 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
   const onPostClick = async () => {
     const response = await sendNewPost(title, content, userToken);
 
-    if (response === undefined || response.status !== 200) {
+    if (response === null || response.status !== 200) {
       setShowError(true);
       console.log(`Something went wrong: ${response}`);
     } else {
@@ -67,7 +66,7 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
             onChange={handleContentChange}
           />
           {showError ? (
-            <Typography variant="body1" color={red[500]}>
+            <Typography variant="body1" color={"red"}>
               Oops something went wrong! Please try again or contact our
               support.
             </Typography>

@@ -35,7 +35,7 @@ const Profile = () => {
     ));
   };
 
-  if (user === undefined) {
+  if (user === null) {
     return showNotFound(userId);
   }
   return (
