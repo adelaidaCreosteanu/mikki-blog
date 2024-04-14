@@ -20,6 +20,24 @@ export const sendNewPost = async (
   }
 };
 
+export const registerUser = async (
+  username: string,
+  password: string,
+  firstName: string,
+  lastName: string
+): Promise<AxiosResponse | null> => {
+  try {
+    return await axios.post(`${BACKEND}/users`, {
+      username,
+      password,
+      firstName,
+      lastName,
+    });
+  } catch (error) {
+    return null;
+  }
+};
+
 export const loginUser = async (
   username: string,
   password: string

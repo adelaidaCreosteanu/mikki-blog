@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
 import "./App.css";
 import Profile from "./components/Profile";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { useAuth } from "./service/AuthProvider";
 import Login from "./components/Login";
+import Register from "./components/Register";
 
 const theme = createTheme({
   palette: {
@@ -22,13 +21,6 @@ const theme = createTheme({
 });
 
 function App() {
-  const navigate = useNavigate();
-  const { status } = useAuth();
-
-  useEffect(() => {
-    if (status === "unauthenticated") navigate("/login");
-  }, [status, navigate]);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -36,7 +28,7 @@ function App() {
         <img src="/logo.png" alt="logo" style={{ width: 150, margin: 20 }} />
 
         <Routes>
-          <Route path="/register" element={<div />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
         </Routes>

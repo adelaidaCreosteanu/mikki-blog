@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PublishedPost from "./PublishedPost";
 import { Stack, Typography } from "@mui/material";
 import CreatePost from "./CreatePost";
 import { useGetPostsForUser, useGetUser } from "../service/use-queries";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { showNotFound } from "./NotFound404";
+import { useAuth } from "../service/AuthProvider";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const { status } = useAuth();
   const { userId } = useParams();
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [triggerReload, setTriggerReload] = useState(false);
   const userToken = localStorage.getItem("accessToken");
   const user = useGetUser(userId, userToken);
   const posts = useGetPostsForUser(user, userToken, triggerReload);
+
+  useEffect(() => {
+    // Redirect to login if user is unauthenticated
+    if (status === "unauthenticated") navigate("/login");
+  }, [status, navigate]);
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");

@@ -1,19 +1,11 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { loginUser } from "../service/post-queries";
 import { grey } from "@mui/material/colors";
 import { useAuth } from "../service/AuthProvider";
+import { CenterStack, WhiteTextField } from "./styledComponents";
+import { getVisibilityAdornment } from "./utils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +13,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showSignInError, setShowSignInError] = useState(false);
-  const { signIn, signOut } = useAuth();
+  const { status, signIn, signOut } = useAuth();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      // Redirect if the user is already authenticated
+      const userId = localStorage.getItem("currentUser");
+      navigate(`/profile/${userId}`);
+    }
+  }, [status, navigate]);
 
   const onLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -38,10 +38,7 @@ const Login = () => {
   };
 
   return (
-    <Stack
-      spacing={1}
-      style={{ alignItems: "center", justifyContent: "center" }}
-    >
+    <CenterStack spacing={1}>
       <Box
         component="form"
         sx={{
@@ -53,25 +50,21 @@ const Login = () => {
           width: "40ch",
         }}
       >
-        <Stack
+        <CenterStack
           spacing={3}
           style={{
-            alignItems: "center",
-            justifyContent: "center",
             marginTop: 10,
             marginBottom: 5,
           }}
         >
-          <TextField
-            style={{ width: "100%", backgroundColor: "#fff" }}
+          <WhiteTextField
             required
             id="login-form-username"
             label="Username"
             autoComplete="username"
             onChange={(e) => setUsername(e.target.value)}
           />
-          <TextField
-            style={{ width: "100%", backgroundColor: "#fff" }}
+          <WhiteTextField
             required
             id="login-form-password"
             label="Password"
@@ -79,26 +72,18 @@ const Login = () => {
             autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowPassword((show) => !show)}
-                    onMouseDown={(event) => event.preventDefault()}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
+              endAdornment: getVisibilityAdornment(
+                showPassword,
+                setShowPassword
               ),
             }}
           />
 
-          {showSignInError && (
+          {showSignInError ? (
             <Typography variant="body1" color={"red"}>
               Incorrect user or password!
             </Typography>
-          )}
+          ) : null}
           <Button
             style={{ width: "12ch" }}
             variant="contained"
@@ -106,31 +91,22 @@ const Login = () => {
           >
             Sign in
           </Button>
-        </Stack>
+        </CenterStack>
       </Box>
 
-      <Box
-        sx={{
-          width: "35ch",
-        }}
-      >
-        <Stack
-          direction={"row"}
-          spacing={1}
-          style={{ justifyContent: "center" }}
-        >
-          {/* <p>No account yet?</p> */}
+      <Box sx={{ width: "35ch" }}>
+        <CenterStack direction={"row"} spacing={1}>
           <Button
             style={{ textTransform: "none" }}
             onClick={() => {
               navigate("/register");
             }}
           >
-            No account yet? Register here
+            No account yet?
           </Button>
-        </Stack>
+        </CenterStack>
       </Box>
-    </Stack>
+    </CenterStack>
   );
 };
 export default Login;
