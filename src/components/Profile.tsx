@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PublishedPost from "./PublishedPost";
 import { Stack } from "@mui/material";
 import CreatePost from "./CreatePost";
-import { useGetPostsForUser } from "../use-queries";
+import { useGetPostsForUser } from "../service/use-queries";
 
 type ProfileProps = {
   userId: number;
@@ -10,8 +10,9 @@ type ProfileProps = {
 
 const Profile = ({ userId }: ProfileProps) => {
   const [isOwnProfile, setIsOwnProfile] = useState(false);
+  const [triggerReload, setTriggerReload] = useState(false);
   const userToken = "token-valid-for-17";
-  const posts = useGetPostsForUser(userId, userToken);
+  const posts = useGetPostsForUser(userId, userToken, triggerReload);
   // TODO: fetch username
   const username = `User ${userId}`;
 
@@ -27,7 +28,7 @@ const Profile = ({ userId }: ProfileProps) => {
         <p>{username} profile</p>
       </div>
 
-      {isOwnProfile ? <CreatePost /> : null}
+      {isOwnProfile ? <CreatePost setTriggerReload={setTriggerReload} /> : null}
 
       <Stack
         spacing={2}

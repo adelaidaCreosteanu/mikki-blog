@@ -7,7 +7,7 @@ export const useGetPostsForUser = (
   userId: number,
   token: string,
   triggerReload: boolean
-) => {
+): Post[] => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const getData = useCallback(async () => {
@@ -18,8 +18,11 @@ export const useGetPostsForUser = (
   }, [setPosts]);
 
   useEffect(() => {
-    console.log("making request");
-    getData();
+    try {
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
   }, [userId, token, getData, triggerReload]);
 
   return posts;

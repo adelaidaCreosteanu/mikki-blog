@@ -7,11 +7,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
+import { sendNewPost } from "../service/post-queries";
+import { red } from "@mui/material/colors";
 
-const CreatePost = () => {
+type CreatePostProps = {
+  setTriggerReload: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [showError, setShowError] = useState(false);
+  const userToken = "token-valid-for-17";
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -19,6 +27,20 @@ const CreatePost = () => {
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
+  };
+
+  const onPostClick = async () => {
+    const response = await sendNewPost(title, content, userToken);
+
+    if (response === undefined || response.status !== 200) {
+      setShowError(true);
+      console.log(`Something went wrong: ${response}`);
+    } else {
+      console.log("Successfully created new post");
+      setTitle("");
+      setContent("");
+      setTriggerReload((prevState) => !prevState);
+    }
   };
 
   return (
@@ -44,10 +66,18 @@ const CreatePost = () => {
             value={content}
             onChange={handleContentChange}
           />
+          {showError ? (
+            <Typography variant="body1" color={red[500]}>
+              Oops something went wrong! Please try again or contact our
+              support.
+            </Typography>
+          ) : null}
         </Stack>
       </CardContent>
       <CardActions>
-        <Button size="small">Post</Button>
+        <Button size="small" onClick={onPostClick}>
+          Post
+        </Button>
       </CardActions>
     </Card>
   );
