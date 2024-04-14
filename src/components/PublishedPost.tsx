@@ -6,13 +6,26 @@ import {
   Typography,
 } from "@mui/material";
 import { Post } from "../interfaces/Post";
+import { deletePost } from "../service/post-queries";
 
 type PublishedPostProps = {
   post: Post;
   isOwnProfile: boolean;
+  setTriggerReload: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const PublishedPost = ({ post, isOwnProfile }: PublishedPostProps) => {
+const PublishedPost = ({
+  post,
+  isOwnProfile,
+  setTriggerReload,
+}: PublishedPostProps) => {
+  const accessToken = localStorage.getItem("accessToken");
+
+  const deleteThisPost = async () => {
+    deletePost(post.id.toString(), accessToken);
+    setTriggerReload((prevState) => !prevState);
+  };
+
   return (
     <Card style={{ width: "100%" }}>
       <CardContent>
@@ -25,7 +38,11 @@ const PublishedPost = ({ post, isOwnProfile }: PublishedPostProps) => {
       </CardContent>
       <CardActions>
         {/* Only show delete button to owner. */}
-        {isOwnProfile ? <Button size="small">Delete</Button> : null}
+        {isOwnProfile ? (
+          <Button size="small" onClick={deleteThisPost}>
+            Delete
+          </Button>
+        ) : null}
       </CardActions>
     </Card>
   );

@@ -40,7 +40,12 @@ const Profile = () => {
     // Sort by newest posts first
     posts.sort((a, b) => b.created.getTime() - a.created.getTime());
     return posts.map((post) => (
-      <PublishedPost key={post.id} post={post} isOwnProfile={isOwnProfile} />
+      <PublishedPost
+        key={post.id}
+        post={post}
+        isOwnProfile={isOwnProfile}
+        setTriggerReload={setTriggerReload}
+      />
     ));
   };
 

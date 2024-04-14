@@ -20,6 +20,20 @@ export const sendNewPost = async (
   }
 };
 
+export const deletePost = async (
+  postId: string,
+  token: string | null
+): Promise<AxiosResponse | null> => {
+  try {
+    return await axios.delete(`${BACKEND}/posts/${postId}`, {
+      headers: { Authorization: token },
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export const registerUser = async (
   username: string,
   password: string,
