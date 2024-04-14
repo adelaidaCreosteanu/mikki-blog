@@ -3,12 +3,10 @@ import PublishedPost from "./PublishedPost";
 import { Stack } from "@mui/material";
 import CreatePost from "./CreatePost";
 import { useGetPostsForUser } from "../service/use-queries";
+import { useParams } from "react-router-dom";
 
-type ProfileProps = {
-  userId: number;
-};
-
-const Profile = ({ userId }: ProfileProps) => {
+const Profile = () => {
+  const { userId } = useParams();
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [triggerReload, setTriggerReload] = useState(false);
   const userToken = "token-valid-for-17";
@@ -18,7 +16,7 @@ const Profile = ({ userId }: ProfileProps) => {
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");
-    const val = currentUser === userId.toString();
+    const val = currentUser === userId?.toString();
     setIsOwnProfile(val);
   }, [userId, isOwnProfile, setIsOwnProfile]);
 

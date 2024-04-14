@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { BACKEND } from "./utils";
 
 export const useGetPostsForUser = (
-  userId: number,
+  userId: string | undefined,
   token: string,
   triggerReload: boolean
 ): Post[] => {
@@ -20,11 +20,11 @@ export const useGetPostsForUser = (
       return item;
     });
     setPosts(posts as Post[]);
-  }, [setPosts]);
+  }, [setPosts, token, userId]);
 
   useEffect(() => {
     try {
-      getData();
+      if (userId !== undefined) getData();
     } catch (error) {
       console.log(error);
     }
