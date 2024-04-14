@@ -2,6 +2,11 @@
 
 This project is a microblogging frontend web application named "Mikki Blog". The app allows users to create and view posts, utilizing a mock backend API.
 
+## How to run
+
+1. Install dependencies with `npm i`
+2. Run locally with `npm start`
+
 ## Tech Stack
 
 - React with Typescript
