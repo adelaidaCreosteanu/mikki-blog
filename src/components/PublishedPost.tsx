@@ -5,26 +5,27 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { Post } from "../interfaces/Post";
 
-type PostProps = {
-  title: string;
-  content: string;
+type PublishedPostProps = {
+  post: Post;
+  isOwnProfile: boolean;
 };
 
-const PublishedPost = ({ title, content }: PostProps) => {
+const PublishedPost = ({ post, isOwnProfile }: PublishedPostProps) => {
   return (
     <Card style={{ width: "100%" }}>
       <CardContent>
         <Typography variant="h5" align="center">
-          {title}
+          {post.title}
         </Typography>
         <Typography variant="body2" align="left">
-          {content}
+          {post.content}
         </Typography>
       </CardContent>
       <CardActions>
-        {/* TODO: only show if it's this user's post */}
-        <Button size="small">Delete</Button>
+        {/* Only show delete button to owner. */}
+        {isOwnProfile ? <Button size="small">Delete</Button> : null}
       </CardActions>
     </Card>
   );

@@ -14,7 +14,12 @@ export const useGetPostsForUser = (
     const { data } = await axios.get(`${BACKEND}/users/${userId}/posts`, {
       headers: { Authorization: token },
     });
-    setPosts(data.items as Post[]);
+    const posts = data.items.map((item: Post) => {
+      item.created = new Date(item.created);
+      item.updated = new Date(item.updated);
+      return item;
+    });
+    setPosts(posts as Post[]);
   }, [setPosts]);
 
   useEffect(() => {

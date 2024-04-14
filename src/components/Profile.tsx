@@ -22,6 +22,21 @@ const Profile = ({ userId }: ProfileProps) => {
     setIsOwnProfile(val);
   }, [userId, isOwnProfile, setIsOwnProfile]);
 
+  const showNoPostsMessage = () => {
+    if (isOwnProfile) {
+      return <p>You don't have any posts yet. Create one!</p>;
+    } else {
+      return <p>{username} doesn't have any posts yet, sorry! </p>;
+    }
+  };
+  const showPublishedPosts = () => {
+    // Sort by newest posts first
+    posts.sort((a, b) => b.created.getTime() - a.created.getTime());
+    return posts.map((post) => (
+      <PublishedPost key={post.id} post={post} isOwnProfile={isOwnProfile} />
+    ));
+  };
+
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
       <div>
@@ -36,21 +51,7 @@ const Profile = ({ userId }: ProfileProps) => {
         alignItems="center"
         style={{ width: "65ch" }}
       >
-        {posts.length === 0 ? (
-          isOwnProfile ? (
-            <p>You don't have any posts yet. Create one!</p>
-          ) : (
-            <p>{username} doesn't have any posts yet, sorry! </p>
-          )
-        ) : (
-          posts.map((post) => (
-            <PublishedPost
-              key={post.id}
-              title={post.title}
-              content={post.content}
-            />
-          ))
-        )}
+        {posts.length === 0 ? showNoPostsMessage() : showPublishedPosts()}
       </Stack>
     </Stack>
   );
