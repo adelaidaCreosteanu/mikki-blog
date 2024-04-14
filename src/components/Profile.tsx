@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import PublishedPost from "./PublishedPost";
 import { Stack } from "@mui/material";
 import CreatePost from "./CreatePost";
-import { useGetPostsForUser } from "../service/use-queries";
+import { useGetPostsForUser, useGetUser } from "../service/use-queries";
 import { useParams } from "react-router-dom";
+import { showNotFound } from "./NotFound404";
 
 const Profile = () => {
   const { userId } = useParams();
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [triggerReload, setTriggerReload] = useState(false);
   const userToken = "token-valid-for-17";
-  const posts = useGetPostsForUser(userId, userToken, triggerReload);
-  // TODO: fetch username
-  const username = `User ${userId}`;
+  const user = useGetUser(userId, userToken);
+  const posts = useGetPostsForUser(user, userToken, triggerReload);
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");
@@ -24,7 +24,7 @@ const Profile = () => {
     if (isOwnProfile) {
       return <p>You don't have any posts yet. Create one!</p>;
     } else {
-      return <p>{username} doesn't have any posts yet, sorry! </p>;
+      return <p>{user?.username} doesn't have any posts yet, sorry! </p>;
     }
   };
   const showPublishedPosts = () => {
@@ -35,10 +35,13 @@ const Profile = () => {
     ));
   };
 
+  if (user === undefined) {
+    return showNotFound(userId);
+  }
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
       <div>
-        <p>{username} profile</p>
+        <p>{user?.username} profile</p>
       </div>
 
       {isOwnProfile ? <CreatePost setTriggerReload={setTriggerReload} /> : null}

@@ -1,10 +1,4 @@
-export interface Author {
-  id: number;
-  firstName: string;
-  lastName: string;
-  username: string;
-  created: Date;
-}
+import { User } from "./User";
 
 export interface Post {
   id: number;
@@ -13,5 +7,5 @@ export interface Post {
   created: Date;
   updated: Date;
   userId: number;
-  author: Author;
+  author: User;
 }
