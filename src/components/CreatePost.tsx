@@ -43,9 +43,9 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
   };
 
   return (
-    <Card style={{ width: "65ch" }}>
+    <Card style={{ width: "65ch", padding: 5 }}>
       <CardContent>
-        <Stack spacing={1} style={{ marginTop: 5 }}>
+        <Stack spacing={2}>
           <Typography variant="body1" align="center">
             What are you thinking?
           </Typography>
@@ -74,7 +74,7 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
         </Stack>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={onPostClick}>
+        <Button variant="contained" onClick={onPostClick}>
           Post
         </Button>
       </CardActions>
