@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PublishedPost from "./PublishedPost";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import CreatePost from "./CreatePost";
 import { useGetPostsForUser, useGetUser } from "../service/use-queries";
 import { useParams } from "react-router-dom";
@@ -41,7 +41,9 @@ const Profile = () => {
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
       <div>
-        <p>{user?.username} profile</p>
+        <Typography variant="h6" align="center">
+          {user?.username}'s page
+        </Typography>
       </div>
 
       {isOwnProfile ? <CreatePost setTriggerReload={setTriggerReload} /> : null}

@@ -31,7 +31,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
-        <img src="/logo.png" alt="logo" style={{ width: 150, marginTop: 20 }} />
+        <img src="/logo.png" alt="logo" style={{ width: 150, margin: 20 }} />
 
         <Routes>
           <Route path="/profile/:userId" element={<Profile />} />
