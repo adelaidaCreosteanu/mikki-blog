@@ -10,7 +10,7 @@ const Profile = () => {
   const { userId } = useParams();
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [triggerReload, setTriggerReload] = useState(false);
-  const userToken = "token-valid-for-17";
+  const userToken = localStorage.getItem("accessToken");
   const user = useGetUser(userId, userToken);
   const posts = useGetPostsForUser(user, userToken, triggerReload);
 

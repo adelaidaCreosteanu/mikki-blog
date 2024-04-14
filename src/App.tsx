@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Profile from "./components/Profile";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { useAuth } from "./service/AuthProvider";
 
 const theme = createTheme({
   palette: {
@@ -20,12 +21,12 @@ const theme = createTheme({
 });
 
 function App() {
-  // TODO: log in user and store user token
+  const navigate = useNavigate();
+  const { status } = useAuth();
 
   useEffect(() => {
-    // TODO: store the current user id and their token
-    localStorage.setItem("currentUser", "17");
-  }, []);
+    if (status === "unauthenticated") navigate("/login");
+  }, [status]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -34,6 +35,8 @@ function App() {
         <img src="/logo.png" alt="logo" style={{ width: 150, margin: 20 }} />
 
         <Routes>
+          <Route path="/register" element={<div />} />
+          <Route path="/login" element={<div />} />
           <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
       </div>

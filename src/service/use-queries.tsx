@@ -5,8 +5,8 @@ import { BACKEND } from "./utils";
 import { User } from "../interfaces/User";
 
 export const useGetPostsForUser = (
-  user: User | undefined,
-  token: string,
+  user: User | null,
+  token: string | null,
   triggerReload: boolean
 ): Post[] => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -25,7 +25,7 @@ export const useGetPostsForUser = (
 
   useEffect(() => {
     try {
-      if (user !== undefined) getData();
+      if (user !== null) getData();
     } catch (error) {
       console.log(error);
     }
@@ -36,9 +36,9 @@ export const useGetPostsForUser = (
 
 export const useGetUser = (
   userId: string | undefined,
-  token: string
-): User | undefined => {
-  const [user, setUser] = useState<User | undefined>(undefined);
+  token: string | null
+): User | null => {
+  const [user, setUser] = useState<User | null>(null);
 
   const getData = useCallback(async () => {
     try {
@@ -48,7 +48,7 @@ export const useGetUser = (
       setUser(data);
     } catch (error) {
       console.log("Caught error");
-      setUser(undefined);
+      setUser(null);
     }
   }, [setUser, token, userId]);
 
