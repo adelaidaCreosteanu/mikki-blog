@@ -9,13 +9,13 @@ import {
 type authStatus = "authenticated" | "unauthenticated" | "loading";
 
 type IAuthContext = {
-  signIn: (accessToken: string) => void;
+  signIn: (accessToken: string, userId: string) => void;
   signOut: () => void;
   status: authStatus;
 };
 
 const initialValue = {
-  signIn: (accessToken: string) => {},
+  signIn: (accessToken: string, userId: string) => {},
   signOut: () => {},
   status: "loading" as authStatus,
 };
@@ -27,8 +27,9 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [status, setStatus] = useState<authStatus>("loading");
 
-  const signIn = async (accessToken: string) => {
+  const signIn = async (accessToken: string, userId: string) => {
     localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("currentUser", userId);
     setStatus("authenticated");
   };
 

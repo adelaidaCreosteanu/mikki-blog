@@ -4,6 +4,7 @@ import Profile from "./components/Profile";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { useAuth } from "./service/AuthProvider";
+import Login from "./components/Login";
 
 const theme = createTheme({
   palette: {
@@ -26,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if (status === "unauthenticated") navigate("/login");
-  }, [status]);
+  }, [status, navigate]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -36,7 +37,7 @@ function App() {
 
         <Routes>
           <Route path="/register" element={<div />} />
-          <Route path="/login" element={<div />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
         </Routes>
       </div>

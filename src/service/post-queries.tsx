@@ -16,6 +16,19 @@ export const sendNewPost = async (
     );
   } catch (error) {
     console.log(error);
-    return undefined;
+  }
+};
+
+export const loginUser = async (
+  username: string,
+  password: string
+): Promise<AxiosResponse | null> => {
+  try {
+    return await axios.post(`${BACKEND}/users/auth`, {
+      username,
+      password,
+    });
+  } catch (error) {
+    return null;
   }
 };
