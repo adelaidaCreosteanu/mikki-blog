@@ -4,7 +4,7 @@ import { BACKEND } from "./utils";
 export const sendNewPost = async (
   title: string,
   content: string,
-  token: string
+  token: string | null
 ): Promise<AxiosResponse | null> => {
   try {
     return await axios.post(

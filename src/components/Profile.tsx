@@ -13,9 +13,9 @@ const Profile = () => {
   const { userId } = useParams();
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [triggerReload, setTriggerReload] = useState(false);
-  const userToken = localStorage.getItem("accessToken");
-  const user = useGetUser(userId, userToken);
-  const posts = useGetPostsForUser(user, userToken, triggerReload);
+  const accessToken = localStorage.getItem("accessToken");
+  const user = useGetUser(userId, accessToken);
+  const posts = useGetPostsForUser(user, accessToken, triggerReload);
 
   useEffect(() => {
     // Redirect to login if user is unauthenticated
@@ -35,6 +35,7 @@ const Profile = () => {
       return <p>{user?.username} doesn't have any posts yet, sorry! </p>;
     }
   };
+
   const showPublishedPosts = () => {
     // Sort by newest posts first
     posts.sort((a, b) => b.created.getTime() - a.created.getTime());

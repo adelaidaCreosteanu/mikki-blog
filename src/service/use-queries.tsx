@@ -29,7 +29,7 @@ export const useGetPostsForUser = (
     } catch (error) {
       console.log(error);
     }
-  }, [user, token, getData, triggerReload]);
+  }, [user, getData, triggerReload]);
 
   return posts;
 };

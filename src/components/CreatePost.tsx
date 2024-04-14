@@ -18,7 +18,7 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [showError, setShowError] = useState(false);
-  const userToken = "token-valid-for-17";
+  const accessToken = localStorage.getItem("accessToken");
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -29,7 +29,7 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
   };
 
   const onPostClick = async () => {
-    const response = await sendNewPost(title, content, userToken);
+    const response = await sendNewPost(title, content, accessToken);
 
     if (response === null || response.status !== 200) {
       setShowError(true);
