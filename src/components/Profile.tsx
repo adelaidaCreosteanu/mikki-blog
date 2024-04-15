@@ -5,7 +5,7 @@ import PublishedPost from "./PublishedPost";
 import CreatePost from "./CreatePost";
 import NotFound from "./NotFound";
 import { CenterStack } from "./styledComponents";
-import { useGetPostsForUser, useGetUser } from "../service/use-queries";
+import { useGetPostsForUser, useGetUser } from "../service/useQueries";
 import { useAuth } from "../service/AuthProvider";
 
 const Profile = () => {

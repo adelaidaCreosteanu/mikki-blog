@@ -1,11 +1,11 @@
-import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../service/post-queries";
+import { Box, Button, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { useAuth } from "../service/AuthProvider";
 import { CenterStack, WhiteTextField } from "./styledComponents";
 import { getVisibilityAdornment } from "./utils";
+import { loginUser } from "../service/postQueries";
+import { useAuth } from "../service/AuthProvider";
 
 const Login = () => {
   const navigate = useNavigate();

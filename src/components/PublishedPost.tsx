@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Post } from "../interfaces/Post";
-import { deletePost } from "../service/post-queries";
+import { deletePost } from "../service/postQueries";
 
 type PublishedPostProps = {
   post: Post;

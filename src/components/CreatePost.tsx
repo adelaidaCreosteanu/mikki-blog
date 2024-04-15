@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { sendNewPost } from "../service/post-queries";
+import { sendNewPost } from "../service/postQueries";
 
 type CreatePostProps = {
   setTriggerReload: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,8 +1,33 @@
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Post } from "../interfaces/Post";
-import { useCallback, useEffect, useState } from "react";
-import { BACKEND } from "./utils";
 import { User } from "../interfaces/User";
+import { BACKEND } from "./utils";
+
+export const useGetUser = (
+  userId: string | undefined,
+  token: string | null
+): User | null => {
+  const [user, setUser] = useState<User | null>(null);
+
+  const getData = useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${BACKEND}/users/${userId}`, {
+        headers: { Authorization: token },
+      });
+      setUser(data);
+    } catch (error) {
+      console.log("Caught error");
+      setUser(null);
+    }
+  }, [setUser, token, userId]);
+
+  useEffect(() => {
+    getData();
+  }, [userId, token, getData]);
+
+  return user;
+};
 
 export const useGetPostsForUser = (
   user: User | null,
@@ -32,29 +57,4 @@ export const useGetPostsForUser = (
   }, [user, getData, triggerReload]);
 
   return posts;
-};
-
-export const useGetUser = (
-  userId: string | undefined,
-  token: string | null
-): User | null => {
-  const [user, setUser] = useState<User | null>(null);
-
-  const getData = useCallback(async () => {
-    try {
-      const { data } = await axios.get(`${BACKEND}/users/${userId}`, {
-        headers: { Authorization: token },
-      });
-      setUser(data);
-    } catch (error) {
-      console.log("Caught error");
-      setUser(null);
-    }
-  }, [setUser, token, userId]);
-
-  useEffect(() => {
-    getData();
-  }, [userId, token, getData]);
-
-  return user;
 };
