@@ -22,7 +22,7 @@ const PublishedPost = ({
   const accessToken = localStorage.getItem("accessToken");
 
   const deleteThisPost = async () => {
-    deletePost(post.id.toString(), accessToken);
+    await deletePost(post.id.toString(), accessToken);
     setTriggerReload((prevState) => !prevState);
   };
 
