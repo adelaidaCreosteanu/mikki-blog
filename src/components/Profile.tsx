@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import PublishedPost from "./PublishedPost";
 import CreatePost from "./CreatePost";
 import NotFound from "./NotFound";
+import { CenterStack } from "./styledComponents";
 import { useGetPostsForUser, useGetUser } from "../service/use-queries";
 import { useAuth } from "../service/AuthProvider";
 
@@ -54,7 +55,7 @@ const Profile = () => {
     return <NotFound userId={userId} />;
   }
   return (
-    <Stack spacing={2} justifyContent="center" alignItems="center">
+    <CenterStack spacing={2}>
       <div>
         <Typography variant="h6" align="center">
           {user?.username}'s page
@@ -63,15 +64,10 @@ const Profile = () => {
 
       {isOwnProfile ? <CreatePost setTriggerReload={setTriggerReload} /> : null}
 
-      <Stack
-        spacing={2}
-        justifyContent="center"
-        alignItems="center"
-        style={{ width: "65ch" }}
-      >
+      <CenterStack spacing={2} style={{ width: "65ch" }}>
         {posts.length > 0 ? showPublishedPosts() : showNoPostsMessage()}
-      </Stack>
-    </Stack>
+      </CenterStack>
+    </CenterStack>
   );
 };
 

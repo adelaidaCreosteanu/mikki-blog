@@ -1,4 +1,5 @@
-import { Stack, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+import { CenterStack } from "./styledComponents";
 
 type NotFoundProps = {
   userId: string | undefined;
@@ -6,7 +7,7 @@ type NotFoundProps = {
 
 const NotFound = ({ userId }: NotFoundProps) => {
   return (
-    <Stack spacing={2} justifyContent="center" alignItems="center">
+    <CenterStack spacing={2}>
       <Typography variant="h4" align="center">
         404
       </Typography>
@@ -16,7 +17,7 @@ const NotFound = ({ userId }: NotFoundProps) => {
       <Typography variant="body1" align="center">
         Try a different user
       </Typography>
-    </Stack>
+    </CenterStack>
   );
 };
 
