@@ -1,9 +1,9 @@
-import "./App.css";
-import Profile from "./components/Profile";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import "./App.css";
 
 const theme = createTheme({
   palette: {
@@ -31,6 +31,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile/:userId" element={<Profile />} />
+          <Route path="/*" element={<Navigate to="/login" />} />
         </Routes>
       </div>
     </ThemeProvider>
