@@ -20,14 +20,6 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
   const [showError, setShowError] = useState(false);
   const accessToken = localStorage.getItem("accessToken");
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(event.target.value);
-  };
-
   const onPostClick = async () => {
     const response = await sendNewPost(title, content, accessToken);
 
@@ -54,7 +46,7 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
             id="title-field"
             label="Title"
             value={title}
-            onChange={handleTitleChange}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             required
@@ -63,8 +55,9 @@ const CreatePost = ({ setTriggerReload }: CreatePostProps) => {
             multiline
             rows={4}
             value={content}
-            onChange={handleContentChange}
+            onChange={(e) => setContent(e.target.value)}
           />
+
           {showError ? (
             <Typography variant="body1" color={"red"}>
               Oops something went wrong! Please try again or contact our
