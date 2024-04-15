@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import PublishedPost from "./PublishedPost";
-import { Stack, Typography } from "@mui/material";
-import CreatePost from "./CreatePost";
-import { useGetPostsForUser, useGetUser } from "../service/use-queries";
 import { useNavigate, useParams } from "react-router-dom";
-import { showNotFound } from "./NotFound404";
+import { Stack, Typography } from "@mui/material";
+import PublishedPost from "./PublishedPost";
+import CreatePost from "./CreatePost";
+import NotFound from "./NotFound";
+import { useGetPostsForUser, useGetUser } from "../service/use-queries";
 import { useAuth } from "../service/AuthProvider";
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const { status } = useAuth();
-  const { userId } = useParams();
   const [isOwnProfile, setIsOwnProfile] = useState(false);
   const [triggerReload, setTriggerReload] = useState(false);
+  const navigate = useNavigate();
+  const { userId } = useParams();
   const accessToken = localStorage.getItem("accessToken");
   const user = useGetUser(userId, accessToken);
   const posts = useGetPostsForUser(user, accessToken, triggerReload);
+  const { status } = useAuth();
 
   useEffect(() => {
     // Redirect to login if user is unauthenticated
@@ -49,8 +49,9 @@ const Profile = () => {
     ));
   };
 
+  // TODO: add loading animation
   if (user === null) {
-    return showNotFound(userId);
+    return <NotFound userId={userId} />;
   }
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">

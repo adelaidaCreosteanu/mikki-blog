@@ -1,6 +1,10 @@
 import { Stack, Typography } from "@mui/material";
 
-export const showNotFound = (userId: string | undefined) => {
+type NotFoundProps = {
+  userId: string | undefined;
+};
+
+const NotFound = ({ userId }: NotFoundProps) => {
   return (
     <Stack spacing={2} justifyContent="center" alignItems="center">
       <Typography variant="h4" align="center">
@@ -15,3 +19,5 @@ export const showNotFound = (userId: string | undefined) => {
     </Stack>
   );
 };
+
+export default NotFound;
