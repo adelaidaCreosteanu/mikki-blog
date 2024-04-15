@@ -24,17 +24,9 @@ const Profile = () => {
 
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");
-    const val = currentUser === userId?.toString();
-    setIsOwnProfile(val);
+    const isOwn = currentUser === userId?.toString();
+    setIsOwnProfile(isOwn);
   }, [userId, isOwnProfile, setIsOwnProfile]);
-
-  const showNoPostsMessage = () => {
-    if (isOwnProfile) {
-      return <p>You don't have any posts yet. Create one!</p>;
-    } else {
-      return <p>{user?.username} doesn't have any posts yet, sorry! </p>;
-    }
-  };
 
   const showPublishedPosts = () => {
     // Sort by newest posts first
@@ -47,6 +39,14 @@ const Profile = () => {
         setTriggerReload={setTriggerReload}
       />
     ));
+  };
+
+  const showNoPostsMessage = () => {
+    if (isOwnProfile) {
+      return <p>You don't have any posts yet. Create one!</p>;
+    } else {
+      return <p>{user?.username} doesn't have any posts yet, sorry! </p>;
+    }
   };
 
   // TODO: add loading animation
@@ -69,7 +69,7 @@ const Profile = () => {
         alignItems="center"
         style={{ width: "65ch" }}
       >
-        {posts.length === 0 ? showNoPostsMessage() : showPublishedPosts()}
+        {posts.length > 0 ? showPublishedPosts() : showNoPostsMessage()}
       </Stack>
     </Stack>
   );
